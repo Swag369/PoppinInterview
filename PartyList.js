@@ -16,11 +16,11 @@ const newParty = () => {
   let name = "party" + counter;
   let image = randomURL[Math.round(Math.random()*3)];
   let price = Math.floor(Math.random()*100);
-  let time = Date.now()+Math.random();
+  let time = Date(2000+100*Math.random(), 12*Math.random(), 30*Math.random(), 24*Math.random(), 60*Math.random(), 60*Math.random(), 0);
   let x = new PartyObject(name, image, price, time);
   parties.push(x);
   updatePartyDisplay([...parties]);
-  //not entirely sure why i had to spread parties... but ill figure it out later not huge issue
+  //not entirely sure why i had to spread parties... but ill figure it out later not huge issue. The problem was it would only render party1
   counter++;
   console.log(x);
   console.log(parties); //this console.log was one behind for some reason, even though it renders right it says parties is one less that is rendering and/or should be

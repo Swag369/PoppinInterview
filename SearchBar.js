@@ -9,19 +9,24 @@ const SearchBar = (props) => {
 
     const [searchInput, setSearchInput] = useState("");
 
+    //I could, mb even SHOULD do this with useeffect, but works cleanly, so I'm leaving it like this cuz I' haven't used useEffect before
     const handleChange = (e) => {
         e.preventDefault();
         setSearchInput(e.target.value);
+        //something about closures makes it so at this point searchInput is not updated yet, it's one stroke behind still. This can prolly be fixed if i use useEffect somehow, but I can also just use e.target.value so I do that
     
         if (searchInput.length > 0) {
             updatePartyDisplay(
                 parties.filter((party) => {
-                    return party.name.match(searchInput);
+                    return party.name.match(e.target.value);
                 })
+                //i COULD filter parties by more than name, i.e. price/date, but thats more work so I won't do it now
             );
-            //this is currently lagging 1 keystroke behind, i'm not sure why tbh, i'll try to fix but i misread the email and thought i had till 5 pm PSt so i might not get to this
         }
-    
+        //I'm acc not sure why searchInput.length being 0 makes it go back to normal, I'd expect it to NOT update the display, and leave it where it was, mb it does do that and since everything is named partyx, the p doesn't have an issue. Just in case, I have the update display
+        if (searchInput.length == 0) {
+            updatePartyDisplay(parties);
+        }
     };
 
     return(
